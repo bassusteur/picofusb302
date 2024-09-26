@@ -6,7 +6,7 @@ int main() {
         init();
         while(true) {
             scan();
-            sleep_ms(500);
+            sleep_ms(1000);
         }
     #endif
 
