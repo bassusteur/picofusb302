@@ -6,6 +6,7 @@
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
 #include "hardware/i2c.h"
+
 #endif
 
 #ifdef CH32X
@@ -13,6 +14,8 @@
 #include <stdio.h>
 #endif
 
-void sc();
+void init();
+
+void scan();
 
 #endif
