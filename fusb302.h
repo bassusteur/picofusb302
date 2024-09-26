@@ -1,5 +1,5 @@
-#ifndef FUSB302_H
-#define FUSB302_H
+#ifndef FUSB302_H_
+#define FUSB302_H_
 
 // FUSB302 register map
 #define REG_DEVICE_ID 0x01
@@ -24,8 +24,23 @@
 #include <stdio.h>
 #endif
 
-void init();
+/*
+struct FUSB302 {
+    uint8_t INT_N;      // interrupt GPIO
+    uint8_t SDA;        // SDA GPIO
+    uint8_t SCL;        // SCL GPIO
+    uint8_t I2C_ADDR;   // I2C ADDRESS
+}
+*/
+
+extern int INT_N;
+
+bool reserved_addr(uint8_t addr);
+
+void init(int *intnptr);
 
 void scan();
+
+void reset();
 
 #endif

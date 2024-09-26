@@ -1,14 +1,12 @@
 #include "fusb302.h"
 
-#ifdef RP2040
+int INT_N = 0;
 
 bool reserved_addr(uint8_t addr) {
     return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
 }
 
-#endif
-
-void init() {
+void init(int *intnptr) {
     #ifdef RP2040
         // initialize with default i2c pins 4 and 5
         i2c_init(i2c_default, 100 * 1000);
@@ -19,6 +17,8 @@ void init() {
 
         bi_decl(bi_2pins_with_func(PICO_DEFAULT_I2C_SDA_PIN, PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C));
     #endif
+
+    INT_N = *intnptr;
 }
 
 void scan() {
