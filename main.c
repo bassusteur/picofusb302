@@ -5,7 +5,9 @@ int main() {
         stdio_init_all();
     #endif
 
-    init(3);
+    struct FUSB302 f1;
+
+    init(f1, 3, 4, 5);
 
     while(1) {
         scan();

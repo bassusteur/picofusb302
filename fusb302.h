@@ -24,20 +24,16 @@
 #include <stdio.h>
 #endif
 
-/*
 struct FUSB302 {
     uint8_t INT_N;      // interrupt GPIO
     uint8_t SDA;        // SDA GPIO
     uint8_t SCL;        // SCL GPIO
     uint8_t I2C_ADDR;   // I2C ADDRESS
-}
-*/
-
-extern int INT_N;
+};
 
 bool reserved_addr(uint8_t addr);
 
-void init(int *intnptr);
+void init(struct FUSB302 fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
 
 void scan();
 
