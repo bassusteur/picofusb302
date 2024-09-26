@@ -33,9 +33,9 @@ struct FUSB302 {
 
 bool reserved_addr(uint8_t addr);
 
-void init(struct FUSB302 fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
+void init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
 
-void scan();
+int scan();
 
 void reset();
 
