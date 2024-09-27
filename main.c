@@ -18,6 +18,7 @@ int main() {
         printf("INT_N: %i\nSDA: %i\nSCL: %i\nADDR: %x\n", f1.INT_N, f1.SDA, f1.SCL, f1.I2C_ADDR);
         //printf("reset return: %i",reset(f1p));   // software reset
         //printf("reset_pd: %i",reset_pd(f1p));    // pd reset
+        printf("read_cc ret: %i \n",read_cc(f1p));
     }
 
     return 0;

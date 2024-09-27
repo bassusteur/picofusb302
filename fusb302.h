@@ -56,4 +56,6 @@ uint8_t reset(struct FUSB302 *fusb);
 // PD reset
 uint8_t reset_pd(struct FUSB302 *fusb);
 
+uint8_t read_cc(struct FUSB302 *fusb);
+
 #endif

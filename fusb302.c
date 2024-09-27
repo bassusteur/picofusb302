@@ -85,3 +85,20 @@ uint8_t reset_pd(struct FUSB302 *fusb) {
 
     return ret;
 }
+
+uint8_t read_cc(struct FUSB302 *fusb){
+    uint8_t buf[1];
+    uint8_t ret;
+    uint8_t reg = REG_DEVICE_ID;
+
+    #ifdef RP2040
+    i2c_write_blocking(i2c_default, fusb->I2C_ADDR, &reg, 1, true);
+    ret = i2c_read_blocking(i2c_default, fusb->I2C_ADDR, buf, 1, false);
+    #endif
+
+    uint8_t a[1] = buf[0];
+
+    printf("%x", buf[0]);
+
+    return ret;
+}
