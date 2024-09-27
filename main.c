@@ -15,7 +15,9 @@ int main() {
         #ifdef RP2040
         sleep_ms(3000);
         #endif
-        printf("INT_N: %i\nSDA: %i\nSCL: %i\nADDR: %x", f1.INT_N, f1.SDA, f1.SCL, f1.I2C_ADDR);
+        printf("INT_N: %i\nSDA: %i\nSCL: %i\nADDR: %x\n", f1.INT_N, f1.SDA, f1.SCL, f1.I2C_ADDR);
+        //printf("reset return: %i",reset(f1p));   // software reset
+        //printf("reset_pd: %i",reset_pd(f1p));    // pd reset
     }
 
     return 0;

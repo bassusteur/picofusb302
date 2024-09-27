@@ -65,3 +65,23 @@ int scan() {
     printf(addr % 16 == 15 ? "\n" : "  ");
     }
 }
+
+uint8_t reset(struct FUSB302 *fusb) {
+    uint8_t buf[2] = {REG_RESET, 0b1};
+    uint8_t ret;
+    #ifdef RP2040
+    ret = i2c_write_blocking(i2c_default, fusb->I2C_ADDR, buf, 2, false);
+    #endif
+
+    return ret;
+}
+
+uint8_t reset_pd(struct FUSB302 *fusb) {
+    uint8_t buf[2] = {REG_RESET, 0b10};
+    uint8_t ret;
+    #ifdef RP2040
+    ret = i2c_write_blocking(i2c_default, fusb->I2C_ADDR, buf, 2, false);
+    #endif
+
+    return ret;
+}
