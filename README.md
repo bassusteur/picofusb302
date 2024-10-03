@@ -6,4 +6,4 @@ A small library for my own projects involving the FUSB302 USB-PD controller IC f
 
 ## Resources
 [Altmode friend source code](https://github.com/CRImier/AltmodeFriend)    
-[Hackaday series of posts about USB-C and the USB-PD protocol](https://hackaday.com/series_of_posts/all-about-usb-c/) [Source code featured in articles](https://github.com/CRImier/HaD_talking_pd/)
+[Hackaday series of posts about USB-C and the USB-PD protocol](https://hackaday.com/series_of_posts/all-about-usb-c/) - [Source code featured in articles](https://github.com/CRImier/HaD_talking_pd/)
