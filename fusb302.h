@@ -25,7 +25,6 @@
 #define REG_FIFOS      _u(0x43)
 
 #ifdef RP2040
-#include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
 #include "hardware/i2c.h"
@@ -34,17 +33,20 @@
 
 #ifdef CH32X
 #include "include/ch32v003fun/ch32v003fun.h"
+#endif
+
+#ifdef DEBUG
 #include <stdio.h>
 #endif
 
 struct FUSB302 {
-    uint8_t INT_N;      // interrupt GPIO
-    uint8_t SDA;        // SDA GPIO
-    uint8_t SCL;        // SCL GPIO
-    uint8_t I2C_ADDR;   // I2C ADDRESS
+    uint8_t fusb_int_n;      // interrupt GPIO
+    uint8_t fusb_sda;        // SDA GPIO
+    uint8_t fusb_scl;        // SCL GPIO
+    uint8_t fusb_i2c_addr;   // I2C ADDRESS
 };
 
-bool reserved_addr(uint8_t addr);
+static inline bool reserved_addr(uint8_t addr);
 
 void init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
 

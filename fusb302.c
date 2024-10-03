@@ -1,6 +1,6 @@
 #include "fusb302.h"
 
-bool reserved_addr(uint8_t addr) {
+static inline bool reserved_addr(uint8_t addr) {
     return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
 }
 
@@ -30,9 +30,9 @@ void init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL) {
 
     #endif
 
-    fusb->INT_N = INT_N;
-    fusb->SDA = SDA;
-    fusb->SCL = SCL;
+    fusb->fusb_int_n = INT_N;
+    fusb->fusb_sda = SDA;
+    fusb->fusb_scl = SCL;
 }
 
 int scan() {
@@ -96,7 +96,7 @@ uint8_t read_cc(struct FUSB302 *fusb){
     ret = i2c_read_blocking(i2c_default, fusb->I2C_ADDR, buf, 1, false);
     #endif
 
-    uint8_t a[1] = buf[0];
+    //uint8_t a[1] = buf[0];
 
     printf("%x", buf[0]);
 
