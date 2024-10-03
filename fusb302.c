@@ -15,7 +15,7 @@ void init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL) {
 
         bi_decl(bi_2pins_with_func(PICO_DEFAULT_I2C_SDA_PIN, PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C));
 
-        for (int addr = 0; addr < (1 << 7); ++addr) {
+        for (int addr = 0; addr < (1 << 7); ++addr) {   // TODO: EDIT THIS BLOCK OF CODE
             int ret;
             uint8_t rxdata;
             if (reserved_addr(addr)) {
