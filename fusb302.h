@@ -28,7 +28,6 @@
 #include "pico/stdlib.h"
 #include "pico/binary_info.h"
 #include "hardware/i2c.h"
-
 #endif
 
 #ifdef CH32X
@@ -39,6 +38,8 @@
 #include <stdio.h>
 #endif
 
+#include <assert.h>
+
 struct FUSB302 {
     uint8_t fusb_int_n;      // interrupt GPIO
     uint8_t fusb_sda;        // SDA GPIO
@@ -47,6 +48,10 @@ struct FUSB302 {
 };
 
 static inline bool reserved_addr(uint8_t addr);
+
+//void fusb302_read(struct FUSB302 *fusb, uint8_t *buf);
+
+//void fusb302_write(struct FUSB302 *fusb, uint8_t *buf);
 
 void fusb302_init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
 
@@ -58,6 +63,10 @@ uint8_t fusb302_reset(struct FUSB302 *fusb);
 // PD reset
 uint8_t reset_pd(struct FUSB302 *fusb);
 
-uint8_t read_cc(struct FUSB302 *fusb);
+// enable cc pins for reading
+uint8_t read_cc(struct FUSB302 *fusb, uint8_t cc);
+
+// unmask fusb302 MASK registers
+uint8_t fusb302_umask(struct FUSB302 *fusb, uint8_t mask);
 
 #endif

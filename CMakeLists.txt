@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.15...3.25)
 
+if(DEFINED DEBUG)
+    message(STATUS "Building for DEBUG")
+    add_definitions(-DDEBUG)
+endif()
 
 if(DEFINED RP2040)
     message(STATUS "Compiling for RP2040")

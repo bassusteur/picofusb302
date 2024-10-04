@@ -8,17 +8,17 @@ int main() {
     struct FUSB302 *f1p, f1;
     f1p = &f1;
 
-    init(f1p, 3, 4, 5);
+    fusb302_init(f1p, 3, 4, 5);
 
     while(1) {
-        scan();
+        fusb302_scan();
         #ifdef RP2040
         sleep_ms(3000);
         #endif
-        printf("INT_N: %i\nSDA: %i\nSCL: %i\nADDR: %x\n", f1.INT_N, f1.SDA, f1.SCL, f1.I2C_ADDR);
+        printf("INT_N: %i\nSDA: %i\nSCL: %i\nADDR: %x\n", f1.fusb_int_n, f1.fusb_sda, f1.fusb_scl, f1.fusb_i2c_addr);
         //printf("reset return: %i",reset(f1p));   // software reset
         //printf("reset_pd: %i",reset_pd(f1p));    // pd reset
-        printf("read_cc ret: %i \n",read_cc(f1p));
+        printf("read_cc ret: %i \n",read_cc(f1p, 0));
     }
 
     return 0;
