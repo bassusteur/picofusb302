@@ -48,12 +48,12 @@ struct FUSB302 {
 
 static inline bool reserved_addr(uint8_t addr);
 
-void init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
+void fusb302_init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
 
-int scan();
+int fusb302_scan();
 
 // software reset
-uint8_t reset(struct FUSB302 *fusb);
+uint8_t fusb302_reset(struct FUSB302 *fusb);
 
 // PD reset
 uint8_t reset_pd(struct FUSB302 *fusb);
