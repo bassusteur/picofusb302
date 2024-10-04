@@ -6,19 +6,18 @@ static inline bool reserved_addr(uint8_t addr) {
 
 
 // gonna make things a lot simpler 
-/*
-void fusb302_write(struct FUSB302 *fusb, uint8_t *buf) {
+uint8_t fusb302_write(struct FUSB302 *fusb, uint8_t *buf, uint8_t bytesize, bool nostop) {
     #ifdef RP2040
-
+        return i2c_write_blocking(i2c_default, fusb->fusb_i2c_addr, buf, bytesize, nostop);
     #endif
 }
 
-void fusb302_read(struct FUSB302 *fusb, uint8_t *buf) {
+uint8_t fusb302_read(struct FUSB302 *fusb, uint8_t *buf, uint8_t bytesize, uint8_t reg) {
     #ifdef RP2040
-
+        i2c_write_blocking(i2c_default, fusb->fusb_i2c_addr, &reg, bytesize, true);
+        return i2c_read_blocking(i2c_default, fusb->fusb_i2c_addr, buf, bytesize, false);
     #endif
 }
-*/
 
 void fusb302_init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL) {
     #ifdef RP2040
@@ -51,7 +50,7 @@ void fusb302_init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL)
     // unmask MASK,MASKA,MASKB
     fusb302_umask(fusb, 0);
     fusb302_umask(fusb, 1);
-    fusb302_umask(fusb, 3);
+    fusb302_umask(fusb, 2);
 
     // fill out our struct with the remaining values
     fusb->fusb_int_n = INT_N;
@@ -85,24 +84,22 @@ int fusb302_scan() {
     }
 }
 
+uint8_t fusb302_device_id(struct FUSB302 *fusb) {
+    uint8_t buf[1];
+
+    fusb302_read(fusb, buf, 1, REG_DEVICE_ID);
+
+    return buf[0];
+}
+
 uint8_t fusb302_reset(struct FUSB302 *fusb) {
     uint8_t buf[2] = {REG_RESET, 0b1};
-    uint8_t ret;
-    #ifdef RP2040
-    ret = i2c_write_blocking(i2c_default, fusb->fusb_i2c_addr, buf, 2, false);
-    #endif
-
-    return ret;
+    return fusb302_write(fusb, buf, 2, false);
 }
 
 uint8_t reset_pd(struct FUSB302 *fusb) {
     uint8_t buf[2] = {REG_RESET, 0b10};
-    uint8_t ret;
-    #ifdef RP2040
-    ret = i2c_write_blocking(i2c_default, fusb->fusb_i2c_addr, buf, 2, false);
-    #endif
-
-    return ret;
+    return fusb302_write(fusb, buf, 2, false);
 }
 
 uint8_t read_cc(struct FUSB302 *fusb, uint8_t cc){
@@ -112,14 +109,12 @@ uint8_t read_cc(struct FUSB302 *fusb, uint8_t cc){
     uint8_t mask;
 
     assert(cc= 1 || 2);
-    #ifdef RP2040
-    i2c_write_blocking(i2c_default, fusb->fusb_i2c_addr, &reg, 1, true);
-    ret = i2c_read_blocking(i2c_default, fusb->fusb_i2c_addr, buf, 1, false);
-    #endif
-
+    fusb302_read(fusb, buf, 1, reg);
     buf[1] = buf[0];
+    printf("orig byte: %x\n", buf[1]);
     uint8_t clear_mask = ~0b1100 & 0xFF;    // clear_mask 0b1100 & 0xFF = 1111011
     buf[1] &= clear_mask;                   // apply our mask to clear bits
+    printf("byte: %x", buf[1]);
     // set cc bit for reading
     if(cc == 1){
         mask = 0b100;
@@ -128,27 +123,24 @@ uint8_t read_cc(struct FUSB302 *fusb, uint8_t cc){
         mask = 0b1000;
     }
     buf[1] |= mask; // apply mask to our output
-
-    #ifdef RP2040
-    buf[0] = reg;
-    i2c_write_blocking(i2c_default, fusb->fusb_i2c_addr, buf, 2, false);
-    #endif
+    buf[0] = reg;   // store register address into the buffer
+    ret = fusb302_write(fusb, buf, 2, false);   // write to register
 
     #ifdef DEBUG
-    printf("reg: %x byte: %x", buf[0], buf[1]);
+    printf("byte: %x ret : %i", buf[1], ret);
     #endif
 
     return ret;
 }
 
 uint8_t fusb302_umask(struct FUSB302 *fusb, uint8_t mask) {
-    uint8_t ret;
+    uint8_t ret = -1;
     uint8_t reg[3] = {REG_MASK, REG_MASKA, REG_MASKB};
+    if (mask >= 3)
+        return ret;
     uint8_t buf[2] = {reg[mask], 0b0};
 
-    #ifdef RP2040
-    ret = i2c_write_blocking(i2c_default, fusb->fusb_i2c_addr, buf, 2, false);
-    #endif
+    ret = fusb302_write(fusb, buf, 2, false);
 
     return ret;
 }

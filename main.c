@@ -18,7 +18,8 @@ int main() {
         printf("INT_N: %i\nSDA: %i\nSCL: %i\nADDR: %x\n", f1.fusb_int_n, f1.fusb_sda, f1.fusb_scl, f1.fusb_i2c_addr);
         //printf("reset return: %i",reset(f1p));   // software reset
         //printf("reset_pd: %i",reset_pd(f1p));    // pd reset
-        printf("read_cc ret: %i \n",read_cc(f1p, 0));
+        printf("device id: %x \n",fusb302_device_id(f1p));
+        read_cc(f1p, 2);
     }
 
     return 0;

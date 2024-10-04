@@ -49,24 +49,27 @@ struct FUSB302 {
 
 static inline bool reserved_addr(uint8_t addr);
 
-//uint8_t fusb302_read(struct FUSB302 *fusb, uint8_t *buf, uint8_t bytesize, bool nostop);
+uint8_t fusb302_write(struct FUSB302 *fusb, uint8_t *buf, uint8_t bytesize, bool nostop);
 
-//uint8_t fusb302_write(struct FUSB302 *fusb, uint8_t *buf, uint8_t bytesize, bool nostop);
+uint8_t fusb302_read(struct FUSB302 *fusb, uint8_t *buf, uint8_t bytesize, uint8_t reg);
 
 void fusb302_init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
 
 int fusb302_scan();
 
-// software reset
+// Get device ID
+uint8_t fusb302_device_id(struct FUSB302 *fusb);
+
+// Software reset
 uint8_t fusb302_reset(struct FUSB302 *fusb);
 
 // PD reset
 uint8_t reset_pd(struct FUSB302 *fusb);
 
-// enable cc pins for reading
+// Enable cc pins for reading
 uint8_t read_cc(struct FUSB302 *fusb, uint8_t cc);
 
-// unmask fusb302 MASK registers
+// Unmask fusb302 MASK registers
 uint8_t fusb302_umask(struct FUSB302 *fusb, uint8_t mask);
 
 #endif
