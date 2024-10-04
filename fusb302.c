@@ -9,7 +9,7 @@ static inline bool reserved_addr(uint8_t addr) {
 /*
 void fusb302_write(struct FUSB302 *fusb, uint8_t *buf) {
     #ifdef RP2040
-    
+
     #endif
 }
 

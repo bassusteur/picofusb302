@@ -49,9 +49,9 @@ struct FUSB302 {
 
 static inline bool reserved_addr(uint8_t addr);
 
-//void fusb302_read(struct FUSB302 *fusb, uint8_t *buf);
+//uint8_t fusb302_read(struct FUSB302 *fusb, uint8_t *buf, uint8_t bytesize, bool nostop);
 
-//void fusb302_write(struct FUSB302 *fusb, uint8_t *buf);
+//uint8_t fusb302_write(struct FUSB302 *fusb, uint8_t *buf, uint8_t bytesize, bool nostop);
 
 void fusb302_init(struct FUSB302 *fusb, uint8_t INT_N, uint8_t SDA, uint8_t SCL);
 
