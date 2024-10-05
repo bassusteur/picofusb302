@@ -108,12 +108,13 @@ uint8_t read_cc(struct FUSB302 *fusb, uint8_t cc){
     uint8_t reg = REG_SWITCHES0;
     uint8_t mask;
 
+    // TODO: fix this code
     assert(cc= 1 || 2);
     fusb302_read(fusb, buf, 1, reg);
     buf[1] = buf[0];
     printf("orig byte: %x\n", buf[1]);
-    uint8_t clear_mask = ~0b1100 & 0xFF;    // clear_mask 0b1100 & 0xFF = 1111011
-    buf[1] &= clear_mask;                   // apply our mask to clear bits
+    uint8_t clear_mask = ~0b1100;    // clear_mask 0b1100 & 0xFF = 1111011
+    buf[1] &= clear_mask;           // apply our mask to clear bits
     printf("byte: %x", buf[1]);
     // set cc bit for reading
     if(cc == 1){
@@ -143,4 +144,15 @@ uint8_t fusb302_umask(struct FUSB302 *fusb, uint8_t mask) {
     ret = fusb302_write(fusb, buf, 2, false);
 
     return ret;
+}
+
+uint8_t fusb302_pullup_enable(struct FUSB302 *fusb) {
+    uint8_t ret;
+    uint8_t buf[2];
+
+    fusb302_read(fusb, buf, 1, REG_SWITCHES0);
+    buf[0] = buf[1];
+    buf[0] |= 0b11000000;
+    buf[1] = REG_SWITCHES0;
+    return fusb302_write(fusb,buf,2,false);
 }

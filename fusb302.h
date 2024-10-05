@@ -72,4 +72,7 @@ uint8_t read_cc(struct FUSB302 *fusb, uint8_t cc);
 // Unmask fusb302 MASK registers
 uint8_t fusb302_umask(struct FUSB302 *fusb, uint8_t mask);
 
+// Enable cc1, cc2 pull ups
+uint8_t fusb302_pullup_enable(struct FUSB302 *fusb);
+
 #endif

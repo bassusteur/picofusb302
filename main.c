@@ -15,7 +15,7 @@ int main() {
         #ifdef RP2040
         sleep_ms(3000);
         #endif
-        printf("INT_N: %i\nSDA: %i\nSCL: %i\nADDR: %x\n", f1.fusb_int_n, f1.fusb_sda, f1.fusb_scl, f1.fusb_i2c_addr);
+        //printf("INT_N: %i\nSDA: %i\nSCL: %i\nADDR: %x\n", f1.fusb_int_n, f1.fusb_sda, f1.fusb_scl, f1.fusb_i2c_addr);
         //printf("reset return: %i",reset(f1p));   // software reset
         //printf("reset_pd: %i",reset_pd(f1p));    // pd reset
         printf("device id: %x \n",fusb302_device_id(f1p));
